@@ -6,9 +6,10 @@ const app = express();
 
 const notes = require('./db/db');
 
+app.use(express.static('public'));
+
 app.get('/api/notes', (req, res) => {
     let results = notes;
-    console.log(req.query)
     res.json(results);
 });
 
