@@ -1,14 +1,20 @@
-[
+{
+  "notes": [
     {
-        "title":"Test Title",
-        "text":"Test text"
+      "title": "Test Title",
+      "text": "Test text"
     },
     {
-        "title":"Grocery List",
-        "text":[
-            "milk",
-            "eggs",
-            "soda"
-        ]
+      "title": "Grocery List",
+      "text": [
+        "milk",
+        "eggs",
+        "soda"
+      ]
+    },
+    {
+      "title": "Note Taker Challenge",
+      "text": "Complete code for the note taker using express.js."
     }
-]
+  ]
+}
