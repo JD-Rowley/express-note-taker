@@ -11,14 +11,6 @@ app.use(express.urlencoded({ extended:true }));
 app.use(express.json());
 app.use(express.static('public'));
 
-// function createNewNote(body, notesArr) {
-//     const note = body;
-//     notesArr.push(note);
-//     fs.writeFileSync(path.join(__dirname, './db/notes.json'), JSON.stringify({ notes: notesArr }, null, 2));
-
-//     return note;
-// };
-
 function validateNote(note) {
     if (!note.title) {
         return false;
@@ -29,9 +21,23 @@ function validateNote(note) {
     return true;
 };
 
+function findById(id, notesArray) {
+    const result = notesArray.filter(note => note.id === id)[0];
+    return result;
+}
+
 app.get('/api/notes', (req, res) => {
     let results = notes;
     res.json(results);
+});
+
+app.get('/api/notes/:id', (req, res) => {
+    const result = findById(req.params.id, notes);
+    if (result) {
+        res.json(result);
+    } else {
+        res.send(404);
+    }
 });
 
 app.get('/', (req, res) => {
@@ -45,20 +51,6 @@ app.get('/notes', (req, res) => {
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'));
 });
-
-// app.get('/api/notes/:title', (req, res) => {
-//     const selectedNote = req.params.note;
-
-//     console.log(selectedNote);
-
-//     for (let i = 0; i < notes.length; i++) {
-//         if (selectedNote === notes[i].title) {
-//             return res.json(notes[i]);
-//         }
-//     }
-
-//     return res.json(false);
-// });
 
 app.post('/api/notes', (req, res) => {
     const newNote = req.body;

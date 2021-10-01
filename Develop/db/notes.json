@@ -1,20 +1,14 @@
 {
   "notes": [
     {
+      "id": "0",
       "title": "Test Title",
       "text": "Test text"
     },
     {
-      "title": "Grocery List",
-      "text": [
-        "milk",
-        "eggs",
-        "soda"
-      ]
-    },
-    {
-      "title": "Note Taker Challenge",
-      "text": "Complete code for the note taker using express.js."
+      "id": "1",
+      "title": "Call mother",
+      "text": "Give mom a call."
     }
   ]
 }
