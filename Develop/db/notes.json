@@ -9,6 +9,11 @@
       "id": "1",
       "title": "Call mother",
       "text": "Give mom a call."
+    },
+    {
+      "title": "Note Taker Challenge",
+      "text": "Complete note taker assignment.",
+      "id": "2"
     }
   ]
 }

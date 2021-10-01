@@ -24,7 +24,19 @@ function validateNote(note) {
 function findById(id, notesArray) {
     const result = notesArray.filter(note => note.id === id)[0];
     return result;
-}
+};
+
+function createNewNote(body, notesArray) {
+    const note = body;
+    if (!validateNote(note)) {
+        res.status(400).send('Both areas must contain text!');
+    } else {
+        notesArray.push(note);
+        fs.writeFileSync(path.join(__dirname, './db/notes.json'), JSON.stringify({ notes: notesArray }, null, 2));
+
+        return note;
+    }
+};
 
 app.get('/api/notes', (req, res) => {
     let results = notes;
@@ -53,16 +65,11 @@ app.get('*', (req, res) => {
 });
 
 app.post('/api/notes', (req, res) => {
-    const newNote = req.body;
-    if (!validateNote(newNote)) {
-        res.status(400).send('Both areas must contain text!');
-    } else {
-        console.log(newNote);
+    req.body.id = notes.length.toString();
 
-        notes.push(newNote);
+    const note = createNewNote(req.body, notes);
 
-        res.json(newNote);
-    }
+    res.json(note);
 });
 
 app.listen(PORT, () => {
