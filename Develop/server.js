@@ -1,11 +1,13 @@
 const fs = require('fs');
 const express = require('express');
+const { v4: uuidv4 } = require('uuid');
 
 const path = require('path');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
 const { notes } = require('./db/notes');
+const { notStrictEqual } = require('assert');
 
 app.use(express.urlencoded({ extended:true }));
 app.use(express.json());
@@ -48,7 +50,7 @@ app.get('/api/notes/:id', (req, res) => {
     if (result) {
         res.json(result);
     } else {
-        res.send(404);
+        res.sendStatus(404);
     }
 });
 
@@ -65,12 +67,22 @@ app.get('*', (req, res) => {
 });
 
 app.post('/api/notes', (req, res) => {
-    req.body.id = notes.length.toString();
+    req.body.id = uuidv4();
 
     const note = createNewNote(req.body, notes);
 
     res.json(note);
 });
+
+app.delete('/api/notes/:id', (req, res) => {
+    const indexToDelete = req.params.id;
+    
+    notes.splice(indexToDelete, 1);
+    
+    fs.writeFileSync(path.join(__dirname, './db/notes.json'), JSON.stringify({ notes }, null, 2));
+
+    res.json(notes);
+})
 
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
