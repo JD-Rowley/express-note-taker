@@ -77,9 +77,9 @@ app.post('/api/notes', (req, res) => {
 });
 
 app.delete('/api/notes/:id', (req, res) => {
-    const indexToDelete = req.params.id;
+    const selectedId = req.params.id;
         
-    fs.writeFileSync(path.join(__dirname, './db/notes.json'), JSON.stringify({ notes: notes.filter(note => indexToDelete !== note.id) }, null, 2));
+    fs.writeFileSync(path.join(__dirname, './db/notes.json'), JSON.stringify({ notes: notes.filter(note => selectedId !== note.id) }, null, 2));
     
     res.json(notes);
 });
