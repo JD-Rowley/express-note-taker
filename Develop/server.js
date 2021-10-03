@@ -7,7 +7,6 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const { notes } = require('./db/notes');
-const { notStrictEqual } = require('assert');
 
 app.use(express.urlencoded({ extended:true }));
 app.use(express.json());
@@ -41,8 +40,11 @@ function createNewNote(body, notesArray) {
 };
 
 app.get('/api/notes', (req, res) => {
-    let results = notes;
-    res.json(results);
+    fs.readFile('./db/notes.json', 'utf8', function(err, data) {
+        if (err) throw err;
+        const { notes } = JSON.parse(data);
+        res.json(notes);
+    })
 });
 
 app.get('/api/notes/:id', (req, res) => {
@@ -76,13 +78,11 @@ app.post('/api/notes', (req, res) => {
 
 app.delete('/api/notes/:id', (req, res) => {
     const indexToDelete = req.params.id;
+        
+    fs.writeFileSync(path.join(__dirname, './db/notes.json'), JSON.stringify({ notes: notes.filter(note => indexToDelete !== note.id) }, null, 2));
     
-    notes.splice(indexToDelete, 1);
-    
-    fs.writeFileSync(path.join(__dirname, './db/notes.json'), JSON.stringify({ notes }, null, 2));
-
     res.json(notes);
-})
+});
 
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
