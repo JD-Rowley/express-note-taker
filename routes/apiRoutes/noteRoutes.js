@@ -39,9 +39,15 @@ router.post('/notes', (req, res) => {
 router.delete('/notes/:id', (req, res) => {
     const selectedId = req.params.id;
         
-    // use filter to generate new note list without chosen id
-    fs.writeFileSync(path.join(__dirname, '../../db/notes.json'), JSON.stringify({ notes: notes.filter(note => selectedId !== note.id) }, null, 2));
-    
+    // use for loop to find object by id and splice
+    for (let i = 0; i < notes.length; i++) {
+        if (notes[i].id === selectedId) {
+            notes.splice(i, 1);
+        }
+    }
+    // write new notes array at the chosen path without the selectedId
+    fs.writeFileSync(path.join(__dirname, '../../db/notes.json'), JSON.stringify({ notes }, null, 2));
+
     res.json(notes);
 });
 
