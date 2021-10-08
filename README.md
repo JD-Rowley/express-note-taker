@@ -25,3 +25,6 @@
   ## Questions
   * GitHub: [jd-rowley](http://github.com/jd-rowley)
   * E-mail: jdrowley1989@gmail.com
+
+  ## Page Screenshot
+  ![Page Screenshot](/assets/img/pageScreenshot.jpg)
