@@ -27,4 +27,4 @@
   * E-mail: jdrowley1989@gmail.com
 
   ## Page Screenshot
-  ![Page Screenshot](/assets/img/pageScreenshot.jpg)
+  ![Page Screenshot](assets/img/pageScreenshot.JPG)
